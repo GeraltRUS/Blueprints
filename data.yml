@@ -1,0 +1,21 @@
+Event: 03.Info
+Attributes: |
+  TotalRequests: 1000000
+  TotalSuccess: 900000
+  TotalError: 100000
+  Rate: 0.9
+Text: >
+  Статистика по использованию интерфейсов APIM:
+
+  Всего запросов 1.000.000, http_200/20х: 900.000, http_ 404/40х: 30.000, http_500/50х
+  Коэффициент успешности Success / Total : 0.9
+
+  Статистика в разбивке по API:
+
+  /carrier/v1.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /cocat/v1.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /C_PRM/v.1.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /eludia/hr_vc/v4.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /fingate/3.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /PublicAPI/ICustomerManagementService/v2.0.0;  Запросы: http_20х: 5000  http_50х: 200
+  /PublicAPI/IProductOrderingService/v2.2.0;  Запросы: http_20х: 5000  http_50х: 200
