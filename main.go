@@ -16,10 +16,16 @@ import (
 
 // Структура отправляемого во внешний API запроса.
 type BodyStruct struct {
-	Event      string                 `json:"Event"`
-	Message    string                 `json:"message"`
-	Attributes map[string]interface{} `json:"Attributes"`
-	Groups     []string               `json:"Groups"`
+	IgnoreRules   bool                   `json:"ignoreRules"`
+	SourceSolCode string                 `json:"sourceSolCode"`
+	Event         string                 `json:"eventId"`
+	Message       string                 `json:"message"`
+	MessageSms    string                 `json:"messageSms"`
+	MessageEmail  string                 `json:"messageEmail"`
+	MessagePush   string                 `json:"messagePush"`
+	Attributes    map[string]interface{} `json:"Attributes"`
+	Logins        []string               `json:"recipientLogins"`
+	Groups        []string               `json:"recipientGroups"`
 }
 
 // Создание локального "сервера" для отправки на него POST ниже
@@ -63,13 +69,18 @@ func runTransportAndPost() {
 
 	// Присваиваем полю message данные из файла
 	c.getData()
+	BodyS.IgnoreRules = c.IgnoreRules
 	BodyS.Event = c.Event
 	BodyS.Message = c.Text
+	BodyS.MessageSms = c.MessageSms
+	BodyS.MessageEmail = c.MessageEmail
+	BodyS.MessagePush = c.MessagePush
 	BodyS.Attributes = StrToMap(c.Attributes)
-
+	BodyS.SourceSolCode = c.SourceSolCode
 	//Читаем конфиг и обогощаем запрос
-	url, apikey, groups := YamlConfRead()
+	url, apikey, groups, logins := YamlConfRead()
 	BodyS.Groups = groups
+	BodyS.Logins = logins
 
 	// Блок для оборачивания в JSON
 	alldata, err := json.MarshalIndent(&BodyS, "", "    ")
@@ -99,10 +110,11 @@ func runTransportAndPost() {
 type YmlConf struct {
 	Endpoint string   `yaml:"Endpoint"`
 	APIKey   string   `yaml:"ApiKey"`
+	Logins   []string `yaml:"Logins"`
 	Groups   []string `yaml:"Groups"`
 }
 
-func YamlConfRead() (string, string, []string) {
+func YamlConfRead() (string, string, []string, []string) {
 	ymlFile, err := os.Open("conf.yml")
 	if err != nil {
 		panic(err)
@@ -121,14 +133,20 @@ func YamlConfRead() (string, string, []string) {
 	url := t.Endpoint
 	apikey := t.APIKey
 	groups := t.Groups
-	return url, apikey, groups
+	logins := t.Logins
+	return url, apikey, groups, logins
 }
 
 // Структура и функция чтения из файла с данными
 type data struct {
-	Event      string `yaml:"Event"`
-	Attributes string `yaml:"Attributes"`
-	Text       string `yaml:"Text"`
+	IgnoreRules   bool   `yaml:"IgnoreRules"`
+	SourceSolCode string `yaml:"SourceSolCode"`
+	Event         string `yaml:"Event"`
+	Attributes    string `yaml:"Attributes"`
+	Text          string `yaml:"Text"`
+	MessageSms    string `yaml:"MessageSms"`
+	MessageEmail  string `yaml:"MessageEmail"`
+	MessagePush   string `yaml:"MessagePush"`
 }
 
 func (c *data) getData() *data {

@@ -1,3 +1,4 @@
 Endpoint: http://127.0.0.1:8080/raw_body
 ApiKey: 32453452345sdfdsg
+Logins: [login1,login2]
 Groups: [Foris, ESB, DaVinci]
