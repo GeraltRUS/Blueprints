@@ -1,12 +1,10 @@
-IgnoreRules: false
-SourceSolCode: PRO.079
 Event: 635fc38be39246ee3d2b16ca
 Attributes: |
   TotalRequests: 1000000
   TotalSuccess: 900000
   TotalError: 100000
   Rate: 0.9
-Text: >
+Text: |
   Статистика по использованию интерфейсов API:
 
   Всего запросов 1.000.000, http_200/20х: 900.000, http_ 404/40х: 30.000, http_500/50х
@@ -20,6 +18,3 @@ Text: >
   /sample/vc/v4.0.0;  Запросы: http_20х: 5000  http_50х: 200
   /BillingExample/3.0.0;  Запросы: http_20х: 5000  http_50х: 200
   /PublicAPI/Balance/v2.0.1;  Запросы: http_20х: 5000  http_50х: 200
-MessageSms:
-MessageEmail:
-MessagePush:
